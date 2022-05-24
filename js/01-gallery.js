@@ -27,14 +27,24 @@ console.log(galleryItems);
 
 
 const onPushAtImg = event => {
-    event.preventDefault()
+  event.preventDefault()
+  event.target.src = event.target.dataset.source
 
+  const instance = basicLightbox.create(`
+    <img src="${event.target.src}">
+`)
+
+    
     if (event.target.nodeName !== 'IMG') {
         return
     }
 
-    event.target.src = event.target.dataset.source
-    // document.addEventListener('keydown', )
+    instance.show()
+    
+    document.addEventListener('keydown', event => {
+      if (event.code === 'Escape') {
+        instance.close()
+      }});
 }
 
 galleryListEl.addEventListener('click', onPushAtImg)
